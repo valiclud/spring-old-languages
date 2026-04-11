@@ -1,1 +1,3 @@
 rootProject.name = 'core.review'
+includeBuild '../api'
+includeBuild '../util'

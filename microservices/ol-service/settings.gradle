@@ -1,1 +1,3 @@
 rootProject.name = 'core.ol'
+includeBuild '../api'
+includeBuild '../util'
