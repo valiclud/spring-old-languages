@@ -1,1 +1,3 @@
 rootProject.name = 'core.recommendation'
+includeBuild '../api'
+includeBuild '../util'

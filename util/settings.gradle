@@ -1,2 +1,3 @@
 rootProject.name = 'util'
-includeBuild '../api'
+include ':api'
+project(':api').projectDir = new File(settingsDir, '../api')

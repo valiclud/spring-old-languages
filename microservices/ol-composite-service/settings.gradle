@@ -1,1 +1,3 @@
 rootProject.name = 'composite.ol'
+includeBuild '../api'
+includeBuild '../util'
