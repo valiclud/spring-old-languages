@@ -1,3 +1,10 @@
 spring:
   application:
     name: core.recommendation
+
+server.port: 7004
+
+logging:
+  level:
+    root: INFO
+    com.github.valiclud.microservices: DEBUG
