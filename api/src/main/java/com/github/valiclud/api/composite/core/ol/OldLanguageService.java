@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface OldLanguageService {
 
   /**
-   * Sample usage: "curl $HOST:$PORT/product/1".
+   * Sample usage: "curl $HOST:$PORT/oldLanguage/1".
    *
-   * @param productId Id of the product
-   * @return the product, if found, else null
+   * @param oldLanguageId Id of the oldLanguage
+   * @return the oldLanguage, if found, else null
    */
   @GetMapping(
     value = "/oldlanguage/{oldLanguageId}",
