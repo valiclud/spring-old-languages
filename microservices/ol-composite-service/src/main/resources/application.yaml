@@ -1,3 +1,15 @@
 spring:
   application:
     name: composite.ol
+
+server.port: 7001
+app:
+  ol-service:
+    host: localhost
+    port: 7002
+  recommendation-service:
+    host: localhost
+    port: 7003
+  review-service:
+    host: localhost
+    port: 7004

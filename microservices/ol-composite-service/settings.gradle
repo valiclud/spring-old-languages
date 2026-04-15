@@ -1,3 +1,5 @@
 rootProject.name = 'composite.ol'
-includeBuild '../api'
-includeBuild '../util'
+include ':api'
+project(':api').projectDir = new File(settingsDir, '../../api')
+include ':util'
+project(':util').projectDir = new File(settingsDir, '../../util')
