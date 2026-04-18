@@ -22,7 +22,7 @@ public class RecommendationServiceImpl implements RecommendationService {
   }
 
   @Override
-  public List<Recommendation> getRecommendations(int productId) {
+  public List<Recommendation> getRecommendations(Long productId) {
 
     if (productId < 1) {
       throw new InvalidInputException("Invalid productId: " + productId);
