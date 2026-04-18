@@ -1,3 +1,14 @@
 spring:
   application:
     name: core.ol
+  web:
+    error:
+      include-message: always
+
+server.port: 7002
+
+logging:
+  level:
+    root: INFO
+    com.github.valiclud: DEBUG
+
