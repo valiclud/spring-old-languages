@@ -12,7 +12,7 @@ public interface OldLanguageCompositeService {
    * @return the composite OldLanguage info, if found, else null
    */
   @GetMapping(
-    value = "/ol-composite/{oldlanguageId}",
+    value = "/ol-composite/{oldLanguageId}",
     produces = "application/json")
-  OldLanguageAggregate getProduct(@PathVariable("oldLanguageId") Long oldlanguageId);
+  OldLanguageAggregate getProduct(@PathVariable("oldLanguageId") Long oldLanguageId);
 }

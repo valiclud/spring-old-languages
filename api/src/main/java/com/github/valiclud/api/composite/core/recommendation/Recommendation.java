@@ -1,7 +1,7 @@
 package com.github.valiclud.api.composite.core.recommendation;
 
 public class Recommendation {
-	  private final int productId;
+	  private final Long productId;
 	  private final int recommendationId;
 	  private final String author;
 	  private final int rate;
@@ -9,7 +9,7 @@ public class Recommendation {
 	  private final String serviceAddress;
 
 	  public Recommendation() {
-	    productId = 0;
+	    productId = 0L;
 	    recommendationId = 0;
 	    author = null;
 	    rate = 0;
@@ -18,7 +18,7 @@ public class Recommendation {
 	  }
 
 	  public Recommendation(
-	    int productId,
+	    Long productId,
 	    int recommendationId,
 	    String author,
 	    int rate,
@@ -33,7 +33,7 @@ public class Recommendation {
 	    this.serviceAddress = serviceAddress;
 	  }
 
-	  public int getProductId() {
+	  public Long getProductId() {
 	    return productId;
 	  }
 

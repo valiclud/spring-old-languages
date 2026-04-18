@@ -1,6 +1,10 @@
 spring:
   application:
     name: composite.ol
+web:
+    error:
+      include-message: always
+
 
 server.port: 7001
 app:
@@ -13,3 +17,8 @@ app:
   review-service:
     host: localhost
     port: 7004
+
+logging:
+  level:
+    root: INFO
+    com.github.valiclud: DEBUG
