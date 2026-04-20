@@ -73,7 +73,8 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	        case NOT_FOUND:
 	          throw new NotFoundException(getErrorMessage(ex));
 
-	        case UNPROCESSABLE_ENTITY:
+	        case UNPROCESSABLE_CONTENT:
+	        	System.out.println("------------ " + HttpStatus.resolve(ex.getStatusCode().value()));
 	          throw new InvalidInputException(getErrorMessage(ex));
 
 	        default:

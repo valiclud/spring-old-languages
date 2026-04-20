@@ -31,7 +31,6 @@ public class OLCompositeServiceImpl implements OldLanguageCompositeService {
 
 	  @Override
 	  public OldLanguageAggregate getProduct(Long oldlanguageId) {
-System.out.println("--------------------------------------");
 	    OldLanguage product = integration.getOldLanguage(oldlanguageId);
 	    if (product == null) {
 	      throw new NotFoundException("No ol found for oldlanguageId: " + oldlanguageId);
