@@ -11,4 +11,6 @@ logging:
   level:
     root: INFO
     com.github.valiclud: DEBUG
-
+---
+spring.config.activate.on-profile: docker
+server.port: 8080

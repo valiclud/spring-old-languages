@@ -17,6 +17,9 @@ repositories {
 	mavenCentral()
 }
 
+bootJar {
+    enabled = true
+}
 jar {
     enabled = false
 }
@@ -36,6 +39,10 @@ dependencies {
 	//testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named("build") {
+    dependsOn("bootJar")
 }
 
 tasks.named('test') {
