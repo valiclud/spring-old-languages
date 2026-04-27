@@ -1,12 +1,12 @@
 spring:
   application:
     name: composite.ol
-web:
+  web:
     error:
       include-message: always
 
-
 server.port: 7001
+
 app:
   ol-service:
     host: localhost
@@ -22,3 +22,19 @@ logging:
   level:
     root: INFO
     com.github.valiclud: DEBUG
+
+---
+spring.config.activate.on-profile: docker
+
+server.port: 8080
+
+app:
+  ol-service:
+    host: ol
+    port: 8080
+  recommendation-service:
+    host: recommendation
+    port: 8080
+  review-service:
+    host: review
+    port: 8080

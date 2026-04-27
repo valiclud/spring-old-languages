@@ -6,7 +6,13 @@ spring:
       include-message: always
 
 server.port: 7004
+
 logging:
   level:
     root: INFO
     com.github.valiclud: DEBUG
+
+---
+spring.config.activate.on-profile: docker
+
+server.port: 8080
