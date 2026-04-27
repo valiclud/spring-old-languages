@@ -23,7 +23,7 @@ public class OldLanguageServiceImpl implements OldLanguageService {
 
 	@Override
 	public OldLanguage getOldLanguage(Long oldLanguageId) {
-		LOG.debug("/product return the found product for oldlaguageId={}", oldLanguageId);
+		LOG.debug("/product return the found product for oldLaguageId={}", oldLanguageId);
 
 		if (oldLanguageId < 1) {
 			throw new InvalidInputException("Invalid productId: " + oldLanguageId);

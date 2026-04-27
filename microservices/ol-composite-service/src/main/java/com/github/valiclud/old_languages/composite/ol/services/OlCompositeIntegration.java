@@ -13,7 +13,6 @@ import com.github.valiclud.api.exceptions.InvalidInputException;
 import com.github.valiclud.api.exceptions.NotFoundException;
 import com.github.valiclud.util.http.HttpErrorInfo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -63,7 +62,7 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	      LOG.debug("Will call getProduct API on URL: {}", url);
 
 	      OldLanguage ol = restTemplate.getForObject(url, OldLanguage.class);
-	      LOG.debug("Found an ol with id: {}", ol.geOldLanguageId());
+	      LOG.debug("Found an ol with id: {}", ol.getOldLanguageId());
 
 	      return ol;
 
@@ -74,7 +73,6 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	          throw new NotFoundException(getErrorMessage(ex));
 
 	        case UNPROCESSABLE_CONTENT:
-	        	System.out.println("------------ " + HttpStatus.resolve(ex.getStatusCode().value()));
 	          throw new InvalidInputException(getErrorMessage(ex));
 
 	        default:

@@ -35,7 +35,6 @@ public class OLCompositeServiceImpl implements OldLanguageCompositeService {
 	    if (product == null) {
 	      throw new NotFoundException("No ol found for oldlanguageId: " + oldlanguageId);
 	    }
-
 	    List<Recommendation> recommendations = integration.getRecommendations(oldlanguageId);
 
 	    List<Review> reviews = integration.getReviews(oldlanguageId);
@@ -50,7 +49,7 @@ public class OLCompositeServiceImpl implements OldLanguageCompositeService {
 	    String serviceAddress) {
 
 	    // 1. Setup product info
-	    Long productId = ol.geOldLanguageId();
+	    Long productId = ol.getOldLanguageId();
 	    String name = ol.getName();
 	    int weight = ol.getWeight();
 
