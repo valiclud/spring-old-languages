@@ -4,12 +4,24 @@ spring:
   web:
     error:
       include-message: always
+  mongodb:
+    host: localhost
+    port: 27017
+    database: product-db
 
 server.port: 7002
+
 logging:
   level:
     root: INFO
     com.github.valiclud: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
 ---
 spring.config.activate.on-profile: docker
+
 server.port: 8080
+
+spring:
+  mongodb:
+    host: mongodb
