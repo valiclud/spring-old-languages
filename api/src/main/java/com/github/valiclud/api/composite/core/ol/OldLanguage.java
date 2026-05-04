@@ -1,26 +1,26 @@
 package com.github.valiclud.api.composite.core.ol;
 
 public class OldLanguage {
-	  private Long oldLanguageId;
+	  private int oldLanguageId;
 	  private String name;
 	  private int weight;
 	  private String serviceAddress;
 
 	  public OldLanguage() {
-	    oldLanguageId = 0L;
+	    oldLanguageId = 0;
 	    name = null;
 	    weight = 0;
 	    serviceAddress = null;
 	  }
 
-	  public OldLanguage(Long oldLanguageId, String name, int weight, String serviceAddress) {
+	  public OldLanguage(int oldLanguageId, String name, int weight, String serviceAddress) {
 	    this.oldLanguageId = oldLanguageId;
 	    this.name = name;
 	    this.weight = weight;
 	    this.serviceAddress = serviceAddress;
 	  }
 
-	  public Long getOldLanguageId() {
+	  public int getOldLanguageId() {
 	    return oldLanguageId;
 	  }
 
@@ -36,7 +36,7 @@ public class OldLanguage {
 	    return serviceAddress;
 	  }
 
-	  public void setOldLanguageId(Long oldLanguageId) {
+	  public void setOldLanguageId(int oldLanguageId) {
 		  this.oldLanguageId = oldLanguageId;
 	  }
 

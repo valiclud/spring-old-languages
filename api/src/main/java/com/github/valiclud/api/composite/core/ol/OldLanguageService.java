@@ -14,5 +14,5 @@ public interface OldLanguageService {
   @GetMapping(
     value = "/oldlanguage/{oldLanguageId}",
     produces = "application/json")
-  OldLanguage getOldLanguage(@PathVariable("oldLanguageId") Long oldLanguageId);
+  OldLanguage getOldLanguage(@PathVariable("oldLanguageId") int oldLanguageId);
 }
