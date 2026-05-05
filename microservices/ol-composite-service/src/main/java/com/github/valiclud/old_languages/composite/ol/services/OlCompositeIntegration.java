@@ -55,7 +55,7 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	    reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review?productId=";
 	  }
 
-	  public OldLanguage getOldLanguage(Long olId) {
+	  public OldLanguage getOldLanguage(int olId) {
 
 	    try {
 	      String url = productServiceUrl + olId;
@@ -87,7 +87,7 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	    return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
 	  }
 
-	  public List<Recommendation> getRecommendations(Long productId) {
+	  public List<Recommendation> getRecommendations(int productId) {
 
 	    try {
 	      String url = recommendationServiceUrl + productId;
@@ -106,7 +106,7 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	    }
 	  }
 
-	  public List<Review> getReviews(Long productId) {
+	  public List<Review> getReviews(int productId) {
 
 	    try {
 	      String url = reviewServiceUrl + productId;

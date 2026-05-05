@@ -16,5 +16,5 @@ public interface ReviewService {
 	  @GetMapping(
 	    value = "/review",
 	    produces = "application/json")
-	  List<Review> getReviews(@RequestParam(value = "productId", required = true) Long productId);
+	  List<Review> getReviews(@RequestParam(value = "productId", required = true) int productId);
 	}

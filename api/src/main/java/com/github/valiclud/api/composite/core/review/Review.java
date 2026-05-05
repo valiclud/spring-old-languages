@@ -1,7 +1,7 @@
 package com.github.valiclud.api.composite.core.review;
 
 public class Review {
-	  private Long productId;
+	  private int productId;
 	  private int reviewId;
 	  private String author;
 	  private String subject;
@@ -9,7 +9,7 @@ public class Review {
 	  private String serviceAddress;
 
 	  public Review() {
-	    productId = 0L;
+	    productId = 0;
 	    reviewId = 0;
 	    author = null;
 	    subject = null;
@@ -18,7 +18,7 @@ public class Review {
 	  }
 
 	  public Review(
-	    Long productId,
+			  int productId,
 	    int reviewId,
 	    String author,
 	    String subject,
@@ -33,7 +33,7 @@ public class Review {
 	    this.serviceAddress = serviceAddress;
 	  }
 
-	  public Long getProductId() {
+	  public int getProductId() {
 	    return productId;
 	  }
 
@@ -57,7 +57,7 @@ public class Review {
 	    return serviceAddress;
 	  }
 
-	  public void setProductId(Long productId) {
+	  public void setProductId(int productId) {
 		  this.productId = productId;
 	  }
 

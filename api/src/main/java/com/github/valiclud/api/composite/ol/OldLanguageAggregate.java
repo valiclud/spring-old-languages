@@ -3,7 +3,7 @@ package com.github.valiclud.api.composite.ol;
 import java.util.List;
 
 public class OldLanguageAggregate {
-	  private final Long oldLanguageId;
+	  private final int oldLanguageId;
 	  private final String name;
 	  private final int weight;
 	  private final List<RecommendationSummary> recommendations;
@@ -11,7 +11,7 @@ public class OldLanguageAggregate {
 	  private final ServiceAddresses serviceAddresses;
 
 	  public OldLanguageAggregate(
-	    Long oldLanguageId,
+	    int oldLanguageId,
 	    String name,
 	    int weight,
 	    List<RecommendationSummary> recommendations,
@@ -26,7 +26,7 @@ public class OldLanguageAggregate {
 	    this.serviceAddresses = serviceAddresses;
 	  }
 
-	  public Long getOldLanguageId() {
+	  public int getOldLanguageId() {
 	    return oldLanguageId;
 	  }
 

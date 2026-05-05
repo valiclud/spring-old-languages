@@ -29,5 +29,5 @@ public interface OldLanguageCompositeService {
   @GetMapping(
     value = "/ol-composite/{oldLanguageId}",
     produces = "application/json")
-  OldLanguageAggregate getProduct(@PathVariable("oldLanguageId") Long oldLanguageId);
+  OldLanguageAggregate getProduct(@PathVariable("oldLanguageId") int oldLanguageId);
 }
