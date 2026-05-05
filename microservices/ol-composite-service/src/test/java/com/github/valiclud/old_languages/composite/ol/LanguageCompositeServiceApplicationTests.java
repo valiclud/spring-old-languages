@@ -26,9 +26,9 @@ import com.github.valiclud.old_languages.composite.ol.services.OlCompositeIntegr
 @AutoConfigureWebTestClient
 class LanguageCompositeServiceApplicationTests {
 
-	  private static final Long LANGUAGE_ID_OK = 1L;
-	  private static final Long LANGUAGE_ID_NOT_FOUND = 2L;
-	  private static final Long LANGUAGE_ID_INVALID = -1L;
+	  private static final int LANGUAGE_ID_OK = 1;
+	  private static final int LANGUAGE_ID_NOT_FOUND = 2;
+	  private static final int LANGUAGE_ID_INVALID = -1;
 
 	  @Autowired private WebTestClient client;
 
