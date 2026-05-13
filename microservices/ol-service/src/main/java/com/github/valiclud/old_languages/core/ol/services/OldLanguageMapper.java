@@ -8,6 +8,7 @@ import com.github.valiclud.api.composite.core.ol.OldLanguage;
 import com.github.valiclud.old_languages.core.ol.persistence.OldLanguageEntity;
 
 @Mapper(componentModel = "spring")
+//@Mapper
 public interface OldLanguageMapper {
 
   @Mappings({
