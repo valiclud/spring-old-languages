@@ -33,21 +33,21 @@ public class ReviewServiceImpl implements ReviewService {
     this.reviewMapper = reviewMapper;
     this.serviceUtil = serviceUtil;
   }
-/*
+
   @Override
   public Review createReview(Review body) {
     try {
-      ReviewEntity entity = mapper.apiToEntity(body);
+      ReviewEntity entity = reviewMapper.apiToEntity(body);
       ReviewEntity newEntity = repository.save(entity);
 
       LOG.debug("createReview: created a review entity: {}/{}", body.getProductId(), body.getReviewId());
-      return mapper.entityToApi(newEntity);
+      return reviewMapper.entityToApi(newEntity);
 
     } catch (DataIntegrityViolationException dive) {
       throw new InvalidInputException("Duplicate key, Product Id: " + body.getProductId() + ", Review Id:" + body.getReviewId());
     }
   }
-*/
+
   @Override
   public List<Review> getReviews(int productId) {
 
@@ -63,11 +63,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     return list;
   }
-/*
+
   @Override
   public void deleteReviews(int productId) {
     LOG.debug("deleteReviews: tries to delete reviews for the product with productId: {}", productId);
     repository.deleteAll(repository.findByProductId(productId));
   }
-  */
+  
 }
