@@ -13,6 +13,7 @@ import com.github.valiclud.api.exceptions.InvalidInputException;
 import com.github.valiclud.api.exceptions.NotFoundException;
 import com.github.valiclud.util.http.HttpErrorInfo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -50,15 +51,15 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	    this.restTemplate = restTemplate;
 	    this.mapper = mapper;
 
-	    productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/oldlanguage/";
-	    recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort + "/recommendation?productId=";
-	    reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review?productId=";
+	    productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/oldlanguage";
+	    recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort + "/recommendation";
+	    reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review";
 	  }
 
-	  public OldLanguage getOldLanguage(int olId) {
-
+	  @Override
+	  public OldLanguage getOldLanguage(int oldLanguageId) {
 	    try {
-	      String url = productServiceUrl + olId;
+	    	String url = productServiceUrl + "/" + oldLanguageId;
 	      LOG.debug("Will call getProduct API on URL: {}", url);
 
 	      OldLanguage ol = restTemplate.getForObject(url, OldLanguage.class);
@@ -67,30 +68,62 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	      return ol;
 
 	    } catch (HttpClientErrorException ex) {
-
-	      switch (HttpStatus.resolve(ex.getStatusCode().value())) {
-	        case NOT_FOUND:
-	          throw new NotFoundException(getErrorMessage(ex));
-
-	        case UNPROCESSABLE_CONTENT:
-	          throw new InvalidInputException(getErrorMessage(ex));
-
-	        default:
-	          LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-	          LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-	          throw ex;
-	      }
+	    	 throw handleHttpClientException(ex);
 	    }
 	  }
+	  
+	  @Override
+	  public OldLanguage createOldLanguage(OldLanguage body) {
 
-	  private String getErrorMessage(HttpClientErrorException ex) {
-	    return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
+		    try {
+		      String url = productServiceUrl;
+		      LOG.debug("Will post a new product to URL: {}", url);
+
+		      OldLanguage product = restTemplate.postForObject(url, body, OldLanguage.class);
+		      LOG.debug("Created a product with id: {}", product.getOldLanguageId());
+
+		      return product;
+
+		    } catch (HttpClientErrorException ex) {
+		      throw handleHttpClientException(ex);
+		    }
 	  }
 
+	  @Override
+	  public void deleteOldLanguage(int oldLanguageId) {
+		  try {
+			  String url = productServiceUrl + "/" + oldLanguageId;
+		      LOG.debug("Will call the deleteProduct API on URL: {}", url);
+
+		      restTemplate.delete(url);
+
+		    } catch (HttpClientErrorException ex) {
+		      throw handleHttpClientException(ex);
+		    }
+	  }
+	  
+	  @Override
+	  public Recommendation createRecommendation(Recommendation body) {
+
+	    try {
+	      String url = recommendationServiceUrl;
+	      LOG.debug("Will post a new recommendation to URL: {}", url);
+
+	      Recommendation recommendation = restTemplate.postForObject(url, body, Recommendation.class);
+	      LOG.debug("Created a recommendation with id: {}", recommendation.getProductId());
+
+	      return recommendation;
+
+	    } catch (HttpClientErrorException ex) {
+	      throw handleHttpClientException(ex);
+	    }
+	  }
+	  
+	  @Override
 	  public List<Recommendation> getRecommendations(int productId) {
 
 	    try {
-	      String url = recommendationServiceUrl + productId;
+	    	String url = recommendationServiceUrl + "?productId=" + productId;
 
 	      LOG.debug("Will call getRecommendations API on URL: {}", url);
 	      List<Recommendation> recommendations = restTemplate
@@ -106,10 +139,41 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	    }
 	  }
 
+	  @Override
+	  public void deleteRecommendations(int productId) {
+	    try {
+	      String url = recommendationServiceUrl + "?productId=" + productId;
+	      LOG.debug("Will call the deleteRecommendations API on URL: {}", url);
+
+	      restTemplate.delete(url);
+
+	    } catch (HttpClientErrorException ex) {
+	      throw handleHttpClientException(ex);
+	    }
+	  }
+	  
+	  @Override
+	  public Review createReview(Review body) {
+
+	    try {
+	      String url = reviewServiceUrl;
+	      LOG.debug("Will post a new review to URL: {}", url);
+
+	      Review review = restTemplate.postForObject(url, body, Review.class);
+	      LOG.debug("Created a review with id: {}", review.getProductId());
+
+	      return review;
+
+	    } catch (HttpClientErrorException ex) {
+	      throw handleHttpClientException(ex);
+	    }
+	  }
+	  
+	  @Override
 	  public List<Review> getReviews(int productId) {
 
 	    try {
-	      String url = reviewServiceUrl + productId;
+	      String url = reviewServiceUrl + "?productId=" + productId;
 
 	      LOG.debug("Will call getReviews API on URL: {}", url);
 	      List<Review> reviews = restTemplate
@@ -124,4 +188,38 @@ public class OlCompositeIntegration implements OldLanguageService, Recommendatio
 	      return new ArrayList<>();
 	    }
 	  }
+
+	  @Override
+	  public void deleteReviews(int productId) {
+	    try {
+	      String url = reviewServiceUrl + "?productId=" + productId;
+	      LOG.debug("Will call the deleteReviews API on URL: {}", url);
+
+	      restTemplate.delete(url);
+
+	    } catch (HttpClientErrorException ex) {
+	      throw handleHttpClientException(ex);
+	    }
+	  }
+	  
+	  private RuntimeException handleHttpClientException(HttpClientErrorException ex) {
+		    switch (HttpStatus.resolve(ex.getStatusCode().value())) {
+
+		      case NOT_FOUND:
+		        return new NotFoundException(getErrorMessage(ex));
+
+		      case UNPROCESSABLE_CONTENT:
+		        return new InvalidInputException(getErrorMessage(ex));
+
+		      default:
+		        LOG.warn("Got an unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+		        LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+		        return ex;
+		    }
+		  }
+	  
+	  private String getErrorMessage(HttpClientErrorException ex) {
+		      return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
+		  }
+
 	}

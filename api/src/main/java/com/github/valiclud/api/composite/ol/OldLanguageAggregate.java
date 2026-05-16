@@ -10,6 +10,15 @@ public class OldLanguageAggregate {
 	  private final List<ReviewSummary> reviews;
 	  private final ServiceAddresses serviceAddresses;
 
+	  public OldLanguageAggregate() {
+		  oldLanguageId = 0;
+		    name = null;
+		    weight = 0;
+		    recommendations = null;
+		    reviews = null;
+		    serviceAddresses = null;
+		  }
+	  
 	  public OldLanguageAggregate(
 	    int oldLanguageId,
 	    String name,
