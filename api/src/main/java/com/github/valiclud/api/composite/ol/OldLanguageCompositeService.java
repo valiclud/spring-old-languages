@@ -63,5 +63,5 @@ public interface OldLanguageCompositeService {
     @ApiResponse(responseCode = "422", description = "${api.responseCodes.unprocessableEntity.description}")
   })
   @DeleteMapping(value = "/ol-composite/{oldLanguageId}")
-  void deleteProduct(@PathVariable int productId);
+  void deleteProduct(@PathVariable("oldLanguageId") int oldLanguageId);
 }
