@@ -1,5 +1,6 @@
 springdoc:
-  swagger-ui.path: /openapi/swagger-ui.html
+  swagger-ui:
+    path: /openapi/swagger-ui.html
   api-docs.path: /openapi/v3/api-docs
   packagesToScan: com.github.valiclud.old_languages.composite.ol
   pathsToMatch: /**
