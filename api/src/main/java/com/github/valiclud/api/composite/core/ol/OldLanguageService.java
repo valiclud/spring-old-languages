@@ -11,7 +11,7 @@ public interface OldLanguageService {
  /**
    * Sample usage, see below.
    *
-   * curl -X POST $HOST:$PORT/oldLanguage \
+   * curl -X POST $HOST:$PORT/oldlanguage \
    *   -H "Content-Type: application/json" --data \
    *   '{"oldLanguageId":123,"name":"oldLanguage 123","weight":123}'
    *
@@ -19,9 +19,9 @@ public interface OldLanguageService {
    * @return A JSON representation of the newly created OldLanguage
    */
   @PostMapping(
-    value    = "/oldlanguage")
-   // consumes = "application/json",
-   // produces = "application/json")
+    value    = "/oldlanguage",
+    consumes = "application/json",
+    produces = "application/json")
   OldLanguage createOldLanguage(@RequestBody OldLanguage body);
 	
   /**
