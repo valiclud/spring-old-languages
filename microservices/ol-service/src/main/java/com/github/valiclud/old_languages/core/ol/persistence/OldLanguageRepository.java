@@ -1,9 +1,9 @@
 package com.github.valiclud.old_languages.core.ol.persistence;
 
-import java.util.Optional;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import reactor.core.publisher.Mono;
 
-public interface OldLanguageRepository extends PagingAndSortingRepository<OldLanguageEntity, String>, CrudRepository<OldLanguageEntity, String> {
-	  Optional<OldLanguageEntity> findByOldLanguageId(int olId);
+
+public interface OldLanguageRepository extends ReactiveCrudRepository<OldLanguageEntity, String> {
+	  Mono<OldLanguageEntity> findByOldLanguageId(int olId);
 	}
