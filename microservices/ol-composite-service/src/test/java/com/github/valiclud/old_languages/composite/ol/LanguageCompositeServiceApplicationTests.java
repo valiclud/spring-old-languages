@@ -9,9 +9,11 @@ import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.HttpStatus.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -21,9 +23,15 @@ import com.github.valiclud.api.composite.core.review.Review;
 import com.github.valiclud.api.exceptions.InvalidInputException;
 import com.github.valiclud.api.exceptions.NotFoundException;
 import com.github.valiclud.old_languages.composite.ol.services.OlCompositeIntegration;
+import org.springframework.http.HttpStatus;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+//@SpringBootTest
 @AutoConfigureWebTestClient
+//@ActiveProfiles("test")
 class LanguageCompositeServiceApplicationTests {
 
 	  private static final int LANGUAGE_ID_OK = 1;
@@ -38,11 +46,11 @@ class LanguageCompositeServiceApplicationTests {
 	  void setUp() {
 
 	    when(compositeIntegration.getOldLanguage(LANGUAGE_ID_OK))
-	      .thenReturn(new OldLanguage(LANGUAGE_ID_OK, "name", 1, "mock-address"));
+	      .thenReturn(Mono.just(new OldLanguage(LANGUAGE_ID_OK, "name", 1, "mock-address")));
 	    when(compositeIntegration.getRecommendations(LANGUAGE_ID_OK))
-	      .thenReturn(singletonList(new Recommendation(LANGUAGE_ID_OK, 1, "author", 1, "content", "mock address")));
+	      .thenReturn(Flux.fromIterable(singletonList(new Recommendation(LANGUAGE_ID_OK, 1, "author", 1, "content", "mock address"))));
 	    when(compositeIntegration.getReviews(LANGUAGE_ID_OK))
-	      .thenReturn(singletonList(new Review(LANGUAGE_ID_OK, 1, "author", "subject", "content", "mock address")));
+	      .thenReturn(Flux.fromIterable(singletonList(new Review(LANGUAGE_ID_OK, 1, "author", "subject", "content", "mock address"))));
 
 	    when(compositeIntegration.getOldLanguage(LANGUAGE_ID_NOT_FOUND))
 	      .thenThrow(new NotFoundException("NOT FOUND: " + LANGUAGE_ID_NOT_FOUND));
@@ -57,43 +65,35 @@ class LanguageCompositeServiceApplicationTests {
 	  @Test
 	  void getLanguageById() {
 
-	    client.get()
-	      .uri("/ol-composite/" + LANGUAGE_ID_OK)
-	      .accept(APPLICATION_JSON)
-	      .exchange()
-	      .expectStatus().isOk()
-	      .expectHeader().contentType(APPLICATION_JSON)
-	      .expectBody()
-	        .jsonPath("$.oldLanguageId").isEqualTo(LANGUAGE_ID_OK)
-	        .jsonPath("$.recommendations.length()").isEqualTo(1)
-	        .jsonPath("$.reviews.length()").isEqualTo(1);
+		  getAndVerifyProduct(LANGUAGE_ID_OK, OK)
+	      .jsonPath("$.oldLanguageId").isEqualTo(LANGUAGE_ID_OK)
+	      .jsonPath("$.recommendations.length()").isEqualTo(1)
+	      .jsonPath("$.reviews.length()").isEqualTo(1);
 	  }
 
 	  @Test
 	  void getLanguageNotFound() {
 
-	    client.get()
-	      .uri("/ol-composite/" + LANGUAGE_ID_NOT_FOUND)
-	      .accept(APPLICATION_JSON)
-	      .exchange()
-	      .expectStatus().isNotFound()
-	      .expectHeader().contentType(APPLICATION_JSON)
-	      .expectBody()
-	        .jsonPath("$.path").isEqualTo("/ol-composite/" + LANGUAGE_ID_NOT_FOUND)
-	        .jsonPath("$.message").isEqualTo("NOT FOUND: " + LANGUAGE_ID_NOT_FOUND);
+		  getAndVerifyProduct(LANGUAGE_ID_NOT_FOUND, NOT_FOUND)
+	      .jsonPath("$.path").isEqualTo("/product-composite/" + LANGUAGE_ID_NOT_FOUND)
+	      .jsonPath("$.message").isEqualTo("NOT FOUND: " + LANGUAGE_ID_NOT_FOUND);
 	  }
 
 	  @Test
 	  void getLanguageInvalidInput() {
 
-	    client.get()
-	      .uri("/ol-composite/" + LANGUAGE_ID_INVALID)
-	      .accept(APPLICATION_JSON)
-	      .exchange()
-	      .expectStatus().isEqualTo(UNPROCESSABLE_CONTENT)
-	      .expectHeader().contentType(APPLICATION_JSON)
-	      .expectBody()
-	        .jsonPath("$.path").isEqualTo("/ol-composite/" + LANGUAGE_ID_INVALID)
-	        .jsonPath("$.message").isEqualTo("INVALID: " + LANGUAGE_ID_INVALID);
+		  getAndVerifyProduct(LANGUAGE_ID_INVALID, UNPROCESSABLE_CONTENT)
+	      .jsonPath("$.path").isEqualTo("/product-composite/" + LANGUAGE_ID_INVALID)
+	      .jsonPath("$.message").isEqualTo("INVALID: " + LANGUAGE_ID_INVALID);
 	  }
+	  
+	  private WebTestClient.BodyContentSpec getAndVerifyProduct(int productId, HttpStatus expectedStatus) {
+		    return client.get()
+		      .uri("/ol-composite/" + productId)
+		      .accept(APPLICATION_JSON)
+		      .exchange()
+		      .expectStatus().isEqualTo(expectedStatus)
+		      .expectHeader().contentType(APPLICATION_JSON)
+		      .expectBody();
+		  }
 	}
