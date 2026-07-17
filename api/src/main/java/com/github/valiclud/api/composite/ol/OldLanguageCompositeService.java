@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import reactor.core.publisher.Mono;
 
 @Tag(name = "OldLanguageComposite", description = "REST API for composite ol information.")
 public interface OldLanguageCompositeService {
@@ -28,7 +29,7 @@ public interface OldLanguageCompositeService {
 			@ApiResponse(responseCode = "400", description = "${api.responseCodes.badRequest.description}"),
 			@ApiResponse(responseCode = "422", description = "${api.responseCodes.unprocessableEntity.description}") })
 	@PostMapping(value = "/ol-composite", consumes = "application/json")
-	void createProduct(@RequestBody OldLanguageAggregate body);
+	Mono<Void> createProduct(@RequestBody OldLanguageAggregate body);
 	  
   /**
    * Sample usage: "curl $HOST:$PORT/ol-composite/1".
@@ -48,7 +49,7 @@ public interface OldLanguageCompositeService {
   @GetMapping(
     value = "/ol-composite/{oldLanguageId}",
     produces = "application/json")
-  OldLanguageAggregate getProduct(@PathVariable("oldLanguageId") int oldLanguageId);
+  Mono<OldLanguageAggregate> getProduct(@PathVariable("oldLanguageId") int oldLanguageId);
   
   /**
    * Sample usage: "curl -X DELETE $HOST:$PORT/product-composite/1".
@@ -63,5 +64,5 @@ public interface OldLanguageCompositeService {
     @ApiResponse(responseCode = "422", description = "${api.responseCodes.unprocessableEntity.description}")
   })
   @DeleteMapping(value = "/ol-composite/{oldLanguageId}")
-  void deleteProduct(@PathVariable("oldLanguageId") int oldLanguageId);
+  Mono<Void> deleteProduct(@PathVariable("oldLanguageId") int oldLanguageId);
 }
