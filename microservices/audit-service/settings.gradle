@@ -1,5 +1,0 @@
-rootProject.name = 'core.audit'
-include ':api'
-project(':api').projectDir = new File(settingsDir, '../../api')
-include ':util'
-project(':util').projectDir = new File(settingsDir, '../../util')
